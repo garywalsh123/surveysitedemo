@@ -1,0 +1,23 @@
+<fieldset class="py-3">
+  <h1 class="text-xl pb-2 font-semibold text-gray-600">
+    {{ question.questionText }}
+  </h1>
+
+  <div
+    *ngFor="let answer of question.answers"
+    class="flex items-center mb-4 p-3 rounded-md border-black-100 border-2"
+    [class.border-blue-700]="answer.selected"
+  >
+    <div class="form-control w-full pr-3">
+      <label class="label cursor-pointer">
+        <span class="label-text pl-3">{{ answer.answerText }}</span>
+        <span class="label-text pl-3">{{ answer.percentage }}%</span>
+      </label>
+      <progress
+        class="progress progress-primary mx-3 mr-3"
+        [value]="answer.percentage"
+        max="100"
+      ></progress>
+    </div>
+  </div>
+</fieldset>

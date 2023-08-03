@@ -1,0 +1,18 @@
+<fieldset class="py-3">
+  <h1 class="text-xl pb-2 font-semibold text-gray-600">
+    {{ question.questionText }}
+  </h1>
+
+  <div
+    *ngFor="let answer of question.answers"
+    class="flex items-center mb-4 p-3 rounded-md border-black-100 border-2"
+    (click)="submitAnswer(answer.answerId)"
+  >
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <input type="radio" name="radio-10" class="radio checked:bg-red-500" />
+        <span class="label-text pl-3">{{ answer.answerText }}</span>
+      </label>
+    </div>
+  </div>
+</fieldset>

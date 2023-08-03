@@ -1,0 +1,32 @@
+<div >
+  <nav class="bg-white shadow-sm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 justify-between">
+        <div class="flex">
+          <div class="flex flex-shrink-0 items-center">
+            <img class="block h-8 w-auto lg:hidden" src="https://www.myopinionmatters.ie/images/favicons/favicon-32x32.png" alt="My Opinion Matters" (click)="goHome()">
+            <img class="hidden h-8 w-auto lg:block" src="https://www.myopinionmatters.ie/images/favicons/favicon-32x32.png" alt="My Opinion Matters" (click)="goHome()">
+          </div>
+          <div class="flex flex-shrink-0 items-center pl-3">
+            <div class="flex space-x-4">
+              <a href="/surveys" class="text-red-700 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Surveys</a>
+              <a href="/register" *ngIf="!isUserLoggedIn()" class="text-red-700 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Register</a>
+              <a href="/login" *ngIf="!isUserLoggedIn()" class="text-red-700 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
+              <a href="/logout" *ngIf="isUserLoggedIn()" class="text-red-700 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Logout</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </nav>
+
+  <div class="py-10">
+    <main>
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <router-outlet></router-outlet>
+        <ng-toast></ng-toast>
+      </div>
+    </main>
+  </div>
+</div>

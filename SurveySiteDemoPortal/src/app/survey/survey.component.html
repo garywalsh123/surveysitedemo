@@ -1,0 +1,79 @@
+<ng-container *ngIf="isLoading; else surveySection">
+    <div class="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50">
+        <div class="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse">loading...</div>
+    </div>
+</ng-container>
+
+<ng-template #surveySection>
+
+    <ng-container *ngIf="isDailySurveyCompleted; else dailySurvey">
+        <div class="bg-white shadow sm:rounded-lg border-gray-200 border-2">
+            <div class="px-4 py-5 sm:p-6">
+                <label class="text-2xl font-semibold text-gray-900">You have completed all the daily surveys. Please check back tomorrow</label>
+                
+                <ng-container *ngIf="!isLoggedIn; else loggedIn">
+                    <div class="w-full text-base text-black-900 py-2">
+                        <p>Are you a member of MyOpinionMatters?</p>
+                    </div>
+                    <fieldset class="mt-4">
+                        <div class="space-y-4">
+                            <div class="flex items-center" (click)="navigateTo('../login')">
+                                <input id="login" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600">
+                                <label for="login" class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                            </div>
+                            <div class="flex items-center" (click)="navigateTo('../register')">
+                                <input id="register" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600">
+                                <label for="register" class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </ng-container>
+                <ng-template #loggedIn>
+                    <div class="w-full text-base text-black-900 py-2">
+                        <p>Thank you for participating today.</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #dailySurvey>
+        <!-- Show the user the signin/signup prompt once the survey is complete -->
+        <ng-container *ngIf="isFinishedSurvey">
+            <div class="bg-white shadow sm:rounded-lg border-gray-200 border-2">
+                <div class="px-4 py-5 sm:p-6">
+                    <label class="text-4xl font-semibold text-gray-900">Thank You!</label>
+                    <div class="w-full text-base text-black-900">
+                        <p>You have completed the daily survey. Are you a member of MyOpinionMatters?</p>
+                    </div>
+                    <fieldset class="mt-4">
+                    <div class="space-y-4">
+                        <div class="flex items-center" (click)="navigateTo('../login')">
+                            <input id="email" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600">
+                            <label for="email" class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center" (click)="navigateTo('../register')">
+                            <input id="sms" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600">
+                            <label for="sms" class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                    </div>
+                    </fieldset>
+                </div>
+            </div>
+        </ng-container>
+
+        <!--Show the next available question to the user-->
+        <survey-question
+            *ngIf="!isFinishedSurvey"
+            [question]="currentQuestion"
+            [surveyId]="survey.surveyId"
+            (nextQuestion)="getNextQuestion($event)"
+            >
+        </survey-question>
+
+        <!-- Show already answered questions -->
+        <survey-question-answered *ngFor="let item of answeredQuestions" [question]="item">
+        </survey-question-answered>
+    </ng-template>
+  
+</ng-template>
